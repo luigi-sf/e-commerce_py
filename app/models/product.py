@@ -3,6 +3,7 @@ import uuid
 from sqlalchemy import Column, String,Float,ForeignKey,Integer
 from sqlalchemy.dialects.postgresql import UUID
 from app.core.database import Base
+from app.models.seller import Seller
 
 
 class Product(Base):

@@ -40,17 +40,14 @@ class UserService:
         return user
     
     
-    def update(self,user:UserUpdate,user_id:UUID,):
-        
-        user = self.repo.update(user_id,user)
-        
-        if not user:
-            raise HTTPException(
-                status_code=404,
-                detail='usuario nao encontrado'
-            )
-            
-        return user
+    def update(self, user_id, data, current_user=None):
+
+        db_user = self.repo.update(user_id, data)
+
+        if not db_user:
+            raise HTTPException(404, "User not found")
+
+        return db_user
     
     
     def delete (self,user_id:UUID):

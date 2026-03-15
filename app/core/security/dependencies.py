@@ -6,7 +6,7 @@ from app.core.database import get_db
 from sqlalchemy.orm import Session
 from app.models.user import User
 
-oauth2_scheme = OAuth2PasswordBearer(
+oauth2_scheme = OAuth2PasswordBearer( #extrator do token 
     tokenUrl='/auth/login'
 )
 
@@ -16,7 +16,7 @@ def get_current_user(
     token: str = Depends(oauth2_scheme)
 ):
 
-    black_list = db.query(TokenBlacklist).filter(
+    black_list = db.query(TokenBlacklist).filter( #verifica se o token esta na blacklost
         TokenBlacklist.token == token
     ).first()
 
@@ -28,7 +28,7 @@ def get_current_user(
     if payload is None:
         raise HTTPException(401, "Invalid token")
 
-    user = db.query(User).filter(
+    user = db.query(User).filter( #pega o id do token e busca no banco
         User.id == payload["user_id"]
     ).first()
 

@@ -13,9 +13,7 @@ class UserRepository:
     def create(self, user: UserCreate):
 
         dbUser = User(
-            name=user.name,
-            email=user.email,
-            password=user.password
+            **user.model_dump() # tranforma o model em dic ai ele passa sozinho
         )
 
         self.db.add(dbUser)
@@ -25,7 +23,7 @@ class UserRepository:
         return dbUser
 
     def list(self):
-        return self.db.query(User).all()
+        return self.db.query(User).all() #self.db.query e filtra oq vc vai pegar
 
     def get_by_id(self, user_id: UUID):
         return self.db.query(User).filter(User.id == user_id).first()

@@ -1,5 +1,6 @@
 start:
 	poetry run uvicorn main:app --reload
 
-reset-db:
-	python reset_db.py
+reset:
+	poetry run python -m scripts.reset_db
+	poetry run python -m scripts.seed_admin

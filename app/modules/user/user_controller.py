@@ -27,7 +27,7 @@ def create(user: UserCreate, service: UserService = Depends(get_user_service)):
 @router.get("/", response_model=list[UserResponse])
 def list(
     service: UserService = Depends(get_user_service),
-    current_user: User = Depends(require_role("admin"))
+    current_user: User = Depends(require_role(["admin"]))
 ):
     return service.list()
 
@@ -58,7 +58,7 @@ def delete_me(
 def get_by_id(
     user_id: UUID,
     service: UserService = Depends(get_user_service),
-    current_user: User = Depends(require_role("admin"))
+    current_user: User = Depends(require_role(["admin"]))
 ):
     return service.get_by_id(user_id)
 
@@ -77,6 +77,6 @@ def update(
 def delete(
     user_id: UUID,
     service: UserService = Depends(get_user_service),
-    current_user: User = Depends(require_role("admin"))
+    current_user: User = Depends(require_role(["admin"]))
 ):
     return service.delete(user_id)
