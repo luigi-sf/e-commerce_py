@@ -14,6 +14,7 @@ O projeto implementa autenticação, gerenciamento de usuários, sellers e produ
 * Pydantic
 * JWT Authentication
 * Poetry
+* Token Blacklist
 * Uvicorn
 
 ---
@@ -93,24 +94,37 @@ http://localhost:8000/docs
 
 ---
 
-# 🔑 Autenticação
+🔐 Autenticação
 
-A API utiliza autenticação **JWT**.
+A API utiliza JWT (JSON Web Token) para autenticação.
+
+Fluxo de autenticação:
+
+1️⃣ Usuário cria conta
+2️⃣ Usuário faz login
+3️⃣ Recebe um access token
+4️⃣ Usa o token para acessar rotas protegidas
+
+Header necessário:
+
+Authorization: Bearer TOKEN
+🚪 Logout Seguro (Token Blacklist)
+
+O projeto implementa blacklist de tokens para garantir logout seguro.
+
+Quando um usuário faz logout:
+
+o token JWT é adicionado à blacklist
+
+tokens presentes na blacklist não podem mais acessar rotas protegidas
+
+Isso evita que tokens roubados ou antigos continuem válidos.
 
 Fluxo:
 
-1. Criar usuário
-2. Fazer login
-3. Receber token
-4. Usar token nas rotas protegidas
-
-Header:
-
-```
-Authorization: Bearer TOKEN
-```
-
----
+Login → recebe token
+Logout → token vai para blacklist
+Request com token → verificado contra blacklist
 
 # 👤 Usuários
 
